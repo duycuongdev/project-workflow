@@ -126,6 +126,12 @@ merge again, and push. NEVER use `--force` on shared branches.
    at the root instead of loosening the gate.
 10. **Deploys can lag silently**: after pushing, verify the production bundle actually changed
     (compare the hashed filename in index.html) before declaring the feature live.
+11. **Second dev server instance silently hops ports** (vite 5173 → 5174/5175...) — unregistered
+    origins break OAuth login with `Error 400: origin_mismatch`. Pin the dev port with
+    `server: { port: 5173, strictPort: true }` in vite.config so a busy port fails loudly.
+12. **When testing with a forged session in a browser, your leftover test servers become
+    user-facing traps** — the user may open your test URL and hit broken auth flows. Always
+    stop test servers at the end of a verification session.
 
 ## 9. When working on UI — review with your eyes before reporting done
 
